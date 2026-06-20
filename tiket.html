@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ETATIX V2 - Papua Van Java</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Inter,Arial,sans-serif}
+body{background:linear-gradient(180deg,#edf3ff,#f8fbff);padding-bottom:130px}
+.container{max-width:1100px;margin:auto;padding:16px}
+.header{background:#fff;border-radius:22px;padding:14px 18px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 10px 30px rgba(0,0,0,.08)}
+.brand{display:flex;align-items:center;gap:12px}
+.brand img{width:52px;height:52px}
+.brand h1{color:#1f4fff}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:18px 0}
+.step{padding:12px;border-radius:14px;background:#fff;text-align:center;font-weight:700}
+.active{background:linear-gradient(135deg,#1f4fff,#4fa4ff);color:#fff}
+.banner img{width:100%;border-radius:24px}
+.hero{margin:20px 0;background:#fff;border-radius:24px;padding:20px;box-shadow:0 8px 25px rgba(0,0,0,.06)}
+.hero h2{color:#1f4fff}
+.timer{margin-top:10px;font-weight:700;color:#e53935}
+.ticket{background:#fff;border-radius:24px;padding:20px;margin-top:16px;box-shadow:0 8px 25px rgba(0,0,0,.06)}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.price{font-size:28px;font-weight:800}
+.badge{background:#e8f0ff;color:#1f4fff;padding:8px 12px;border-radius:12px;font-weight:700}
+.stock{margin-top:10px;padding:10px;border-radius:12px;font-weight:700}
+.gold{background:#fff3c4}
+.blue{background:#dff4ff}
+.btn{background:linear-gradient(135deg,#1f4fff,#4fa4ff);border:none;color:#fff;padding:14px 20px;border-radius:14px;font-weight:700}
+.counter{display:none;align-items:center;gap:10px}
+.counter button{width:42px;height:42px;border:none;border-radius:12px;background:#1f4fff;color:#fff}
+.counter span{font-weight:800;font-size:20px;min-width:30px;text-align:center}
+.promo{margin-top:18px}
+.promo input{width:100%;padding:14px;border:1px solid #ddd;border-radius:14px}
+.checkout{position:fixed;bottom:0;left:0;right:0;background:#fff;padding:16px;box-shadow:0 -10px 30px rgba(0,0,0,.1)}
+.buy{width:100%;padding:18px;border:none;border-radius:16px;background:linear-gradient(135deg,#1f4fff,#4fa4ff);color:#fff;font-weight:800}
+.summary{display:flex;justify-content:space-between;margin-bottom:10px;font-weight:700}
+@media(max-width:700px){.steps{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="header">
+<div class="brand"><img src="logo.png"><h1>ETATIX</h1></div>
+<div>🇮🇩 ID</div>
+</div>
+
+<div class="steps">
+<div class="step active">1. Pilih Tiket</div>
+<div class="step">2. Data</div>
+<div class="step">3. Pembayaran</div>
+<div class="step">4. E-Ticket</div>
+</div>
+
+<div class="banner"><img src="banner.png"></div>
+
+<div class="hero">
+<h2>Papua Van Java - Jayapura 2026</h2>
+<p>Pesan tiket resmi dengan aman dan cepat.</p>
+<div class="timer">⏳ Promo berakhir dalam: <span id="countdown">15:00</span></div>
+</div>
+
+<div class="ticket" data-name="TRIBUN UTARA & SELATAN" data-price="150000">
+<div class="row"><h3>TRIBUN UTARA & SELATAN</h3><span class="badge">ON SALE</span></div>
+<div class="stock gold">🔥 TERSISA 47 TIKET</div>
+<div class="row" style="margin-top:15px">
+<div class="price">Rp150.000</div>
+<button class="btn select">Pilih Tiket</button>
+<div class="counter"><button class="minus">−</button><span>1</span><button class="plus">+</button></div>
+</div>
+</div>
+
+<div class="ticket" data-name="TRIBUN UTAMA" data-price="250000">
+<div class="row"><h3>TRIBUN UTAMA</h3><span class="badge">BEST VIEW</span></div>
+<div class="stock blue">⚡ TERSISA 23 TIKET</div>
+<div class="row" style="margin-top:15px">
+<div class="price">Rp250.000</div>
+<button class="btn select">Pilih Tiket</button>
+<div class="counter"><button class="minus">−</button><span>1</span><button class="plus">+</button></div>
+</div>
+</div>
+
+<div class="promo">
+<input id="promoCode" placeholder="Masukkan kode promo">
+</div>
+</div>
+
+<div class="checkout">
+<div class="container" style="padding:0">
+<div class="summary"><span id="qty">0 Tiket</span><span id="total">Rp 0</span></div>
+<button class="buy" id="buyBtn">🎟️ Lanjut ke Form Pemesanan</button>
+</div>
+</div>
+
+<script>
+const tickets=document.querySelectorAll('.ticket');
+let discount=0;
+
+function rp(n){return 'Rp '+n.toLocaleString('id-ID')}
+
+function update(){
+let total=0,qty=0,jenis=[];
+tickets.forEach(t=>{
+const c=t.querySelector('.counter');
+if(c.style.display==='flex'){
+let q=parseInt(c.querySelector('span').textContent);
+let p=parseInt(t.dataset.price);
+qty+=q; total+=q*p;
+jenis.push(t.dataset.name+' x'+q);
+}
+});
+total=Math.max(0,total-discount);
+qtyEl.textContent=qty+' Tiket';
+totalEl.textContent=rp(total);
+localStorage.setItem('jenisTiket',jenis.join(', '));
+localStorage.setItem('jumlahItem',qty);
+localStorage.setItem('totalHarga',total);
+}
+
+const qtyEl=document.getElementById('qty');
+const totalEl=document.getElementById('total');
+
+tickets.forEach(t=>{
+let count=1;
+const select=t.querySelector('.select');
+const counter=t.querySelector('.counter');
+const span=counter.querySelector('span');
+
+select.onclick=()=>{
+counter.style.display='flex';
+select.style.display='none';
+count=1;span.textContent=1;update();
+}
+t.querySelector('.plus').onclick=()=>{count++;span.textContent=count;update();}
+t.querySelector('.minus').onclick=()=>{
+count--;
+if(count<=0){counter.style.display='none';select.style.display='inline-block';count=1;}
+else span.textContent=count;
+update();
+}
+});
+
+promoCode.oninput=()=>{
+discount = promoCode.value==="PVJ2026" ? 50000 : 0;
+update();
+}
+
+buyBtn.onclick=()=>{
+if((+localStorage.getItem('jumlahItem')||0)<1){alert('Pilih tiket terlebih dahulu');return;}
+localStorage.setItem('promo',promoCode.value);
+location.href='form.html';
+}
+
+let sec=900;
+setInterval(()=>{
+if(sec>0){sec--;}
+let m=String(Math.floor(sec/60)).padStart(2,'0');
+let s=String(sec%60).padStart(2,'0');
+countdown.textContent=m+':'+s;
+},1000);
+
+setInterval(()=>{
+document.querySelectorAll('.stock').forEach(el=>{
+let n=parseInt(el.textContent.match(/\d+/)[0]);
+if(n>1 && Math.random()<0.5) n--;
+el.textContent=el.textContent.replace(/\d+/,n);
+});
+},60000);
+</script>
+</body>
+</html>
