@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Verifikasi Pembelian Premium</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+    background:linear-gradient(-45deg,#0f172a,#1e293b,#312e81,#0f172a);
+    background-size:400% 400%;
+    animation:bgMove 10s ease infinite;
+}
+
+@keyframes bgMove{
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+
+.particles{
+    position:absolute;
+    width:100%;
+    height:100%;
+    overflow:hidden;
+}
+
+.particles span{
+    position:absolute;
+    display:block;
+    width:6px;
+    height:6px;
+    background:white;
+    border-radius:50%;
+    animation:float 15s linear infinite;
+    opacity:.5;
+}
+
+@keyframes float{
+    0%{
+        transform:translateY(100vh) scale(0);
+    }
+    100%{
+        transform:translateY(-100vh) scale(1);
+    }
+}
+
+.card{
+    width:95%;
+    max-width:500px;
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(20px);
+    border:1px solid rgba(255,255,255,.2);
+    border-radius:30px;
+    padding:40px;
+    text-align:center;
+    color:white;
+    box-shadow:0 0 50px rgba(0,0,0,.3);
+    animation:fadeIn 1s ease;
+    z-index:2;
+}
+
+@keyframes fadeIn{
+    from{
+        opacity:0;
+        transform:translateY(50px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+.icon{
+    font-size:90px;
+    animation:pulse 1.5s infinite;
+}
+
+@keyframes pulse{
+    0%,100%{transform:scale(1)}
+    50%{transform:scale(1.15)}
+}
+
+h1{
+    margin-top:15px;
+    font-size:30px;
+    font-weight:800;
+}
+
+.subtitle{
+    margin-top:10px;
+    color:#dbeafe;
+    line-height:1.7;
+}
+
+.timer{
+    margin:30px 0;
+    font-size:60px;
+    font-weight:800;
+    color:#22c55e;
+    text-shadow:0 0 20px #22c55e;
+}
+
+.progress-container{
+    width:100%;
+    height:20px;
+    background:rgba(255,255,255,.1);
+    border-radius:50px;
+    overflow:hidden;
+    margin-top:20px;
+}
+
+.progress{
+    width:0%;
+    height:100%;
+    border-radius:50px;
+    background:linear-gradient(90deg,#00ff88,#00c3ff);
+    animation:glow 1s infinite alternate;
+}
+
+@keyframes glow{
+    from{
+        box-shadow:0 0 10px #00ff88;
+    }
+    to{
+        box-shadow:0 0 30px #00c3ff;
+    }
+}
+
+.status{
+    margin-top:15px;
+    font-size:14px;
+    color:#cbd5e1;
+}
+
+.loader{
+    margin:25px auto;
+    width:60px;
+    height:60px;
+    border:5px solid rgba(255,255,255,.2);
+    border-top:5px solid #00ff88;
+    border-radius:50%;
+    animation:spin 1s linear infinite;
+}
+
+@keyframes spin{
+    100%{
+        transform:rotate(360deg);
+    }
+}
+
+.footer{
+    margin-top:25px;
+    font-size:13px;
+    opacity:.8;
+}
+</style>
+</head>
+<body>
+
+<div class="particles" id="particles"></div>
+
+<div class="card">
+
+    <div class="icon">✅</div>
+
+    <h1>PEMBELIAN ANDA SEDANG DI VERIFIKASI</h1>
+
+    <p class="subtitle">
+        Mohon tunggu beberapa saat.<br>
+        Sistem sedang memvalidasi transaksi premium Anda.
+    </p>
+
+    <div class="loader"></div>
+
+    <div class="timer" id="countdown">01:00</div>
+
+    <div class="progress-container">
+        <div class="progress" id="progress"></div>
+    </div>
+
+    <div class="status">
+        Verifikasi transaksi berjalan...
+    </div>
+
+    <div class="footer">
+        Anda akan diarahkan otomatis ke halaman sukses.
+    </div>
+
+</div>
+
+<script>
+
+// PARTICLES
+const particles = document.getElementById('particles');
+
+for(let i=0;i<50;i++){
+    let dot=document.createElement('span');
+
+    dot.style.left=Math.random()*100+'%';
+    dot.style.animationDuration=(10+Math.random()*15)+'s';
+    dot.style.opacity=Math.random();
+
+    particles.appendChild(dot);
+}
+
+// COUNTDOWN
+let totalSeconds = 60;
+let current = 0;
+
+const countdown = document.getElementById("countdown");
+const progress = document.getElementById("progress");
+
+const timer = setInterval(() => {
+
+    let minutes = Math.floor(totalSeconds / 60);
+    let seconds = totalSeconds % 60;
+
+    countdown.innerHTML =
+        String(minutes).padStart(2,'0') +
+        ":" +
+        String(seconds).padStart(2,'0');
+
+    let percent = (current / 60) * 100;
+    progress.style.width = percent + "%";
+
+    totalSeconds--;
+    current++;
+
+    if(totalSeconds < 0){
+
+        clearInterval(timer);
+
+        countdown.innerHTML = "SELESAI";
+
+        progress.style.width = "100%";
+
+        // Redirect ke halaman success
+        window.location.href = "success.html";
+    }
+
+},1000);
+
+</script>
+
+</body>
+</html>
