@@ -11,7 +11,7 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:Poppins,sans-serif;background:#f3f5f9;color:#111}
-.container{max-width:900px;margin:auto;background:#fff;min-height:100vh}
+.container{width:100%;max-width:100%;margin:0;background:#fff;min-height:100vh}
 
 /* NAVBAR */
 .navbar{background:#17349f;height:92px;padding:0 18px;display:flex;align-items:center;justify-content:space-between}
@@ -34,9 +34,35 @@ body{font-family:Poppins,sans-serif;background:#f3f5f9;color:#111}
 .social{display:flex;gap:12px;flex-wrap:wrap}
 .social a{text-decoration:none;background:#eef1f7;color:#4562d8;padding:12px 18px;border-radius:14px;font-weight:600}
 
-.tabs{display:flex;border-bottom:1px solid #ddd;padding:0 20px;gap:25px}
-.tabs a{text-decoration:none;color:#7c8597;padding:15px 0;font-weight:600}
-.tabs a.active{color:#111;border-bottom:3px solid #4562d8}
+.tabs{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:12px;
+padding:0 20px 16px;
+border-bottom:1px solid #ddd;
+overflow-x:auto;
+scrollbar-width:none;
+}
+.tabs::-webkit-scrollbar{display:none}
+.tabs a{
+flex:1;
+text-align:center;
+text-decoration:none;
+color:#7c8597;
+padding:14px 12px;
+font-weight:600;
+border-radius:14px;
+white-space:nowrap;
+transition:.25s ease;
+}
+.tabs a:hover{background:#eef2ff;color:#345eea}
+.tabs a.active{
+color:#fff;
+background:#345eea;
+border-bottom:none;
+box-shadow:0 8px 24px rgba(52,94,234,.25);
+}
 
 .content{padding:20px;line-height:1.8}
 .content h2{margin-bottom:15px}
@@ -50,7 +76,28 @@ li{margin-bottom:10px}
 .buy-btn{display:block;text-align:center;background:#345eea;color:#fff;text-decoration:none;padding:18px;border-radius:18px;font-weight:700}
 
 /* FOOTER */
-footer{background:#0d1f63;color:#fff;padding:40px 20px;margin-top:30px}
+footer{
+width:100%;
+background:linear-gradient(135deg,#17349f 0%,#10246f 100%);
+color:#fff;
+padding:48px 20px 110px;
+margin-top:30px;
+position:relative;
+overflow:hidden;
+box-shadow:0 -20px 60px rgba(52,94,234,.35);
+}
+.footer-grid,.footer-logo,.copy{
+max-width:900px;
+margin-left:auto;
+margin-right:auto;
+}
+footer::before{
+content:'';
+position:absolute;
+inset:-30%;
+background:radial-gradient(circle,rgba(88,123,255,.22) 0%,rgba(88,123,255,0) 70%);
+pointer-events:none;
+}
 .footer-logo img{height:46px;margin-bottom:15px}
 .footer-grid{display:grid;gap:20px}
 .footer-title{font-weight:700;margin-bottom:10px}
@@ -123,10 +170,25 @@ display:none;z-index:3000
 </style>
 
 
-<style id="tabs-v3">
-.tabs a.active{
-color:#111;
-border-bottom:3px solid #4562d8;
+
+
+
+<style id="v5-mobile-navbar">
+.container{width:100%;max-width:900px}
+.navbar{height:78px;padding:0 14px}
+.logo img{height:42px}
+.logo-text{font-size:24px}
+.btn{width:50px;height:50px}
+.lang{padding:10px 14px;font-size:14px}
+.mobile-buy{backdrop-filter:blur(10px)}
+.mobile-buy a{transition:all .35s ease}
+.mobile-buy a:hover{transform:translateY(-2px)}
+@media(max-width:768px){
+.container{max-width:100%}
+.navbar{height:72px}
+.logo img{height:36px}
+.logo-text{font-size:20px}
+.btn{width:46px;height:46px;font-size:18px}
 }
 </style>
 
@@ -135,7 +197,7 @@ border-bottom:3px solid #4562d8;
 
 <div class="container">
 
-<nav class="navbar">
+<div style="max-width:900px;margin:auto;"><nav class="navbar">
 <div class="logo"><img src="logo-etatix-icon.png" alt="ETATIX"><span class="logo-text">ETATIX</span></div>
 
 <div class="right">
@@ -143,9 +205,9 @@ border-bottom:3px solid #4562d8;
 <div class="btn" id="searchBtn"><i class="fa-solid fa-magnifying-glass"></i></div>
 <div class="btn" id="menuBtn"><i class="fa-solid fa-bars"></i></div>
 </div>
-</nav>
+</nav></div>
 
-<div class="banner">
+<div style="max-width:900px;margin:auto;"><div class="banner">
 <img src="banner-saya.png" alt="Banner Event">
 </div>
 
@@ -206,12 +268,6 @@ border-bottom:3px solid #4562d8;
 <div id="panel-syarat" style="display:none;"><h2 style="margin-top:30px">Syarat & Ketentuan</h2>
 <ol><li>Ketentuan pengunjung nomor 1 wajib dipatuhi selama acara berlangsung demi keamanan, kenyamanan, dan kelancaran penyelenggaraan event.</li><li>Ketentuan pengunjung nomor 2 wajib dipatuhi selama acara berlangsung demi keamanan, kenyamanan, dan kelancaran penyelenggaraan event.</li><li>Ketentuan pengunjung nomor 3 wajib dipatuhi selama acara berlangsung demi keamanan, kenyamanan, dan kelancaran penyelenggaraan event.</li><li>Ketentuan pengunjung nomor 4 wajib dipatuhi selama acara berlangsung demi keamanan, kenyamanan, dan kelancaran penyelenggaraan event.</li><li>Ketentuan pengunjung nomor 5 wajib dipatuhi selama acara berlangsung demi keamanan, kenyamanan, dan kelancaran penyelenggaraan event.</li><li>Ketentuan pengunjung nomor 6 wajib dipatuhi selama acara berlangsung demi keamanan, kenyamanan, dan kelancaran penyelenggaraan event.</li><li>Ketentuan pengunjung nomor 7 wajib dipatuhi selama acara berlangsung demi keamanan, kenyamanan, dan kelancaran penyelenggaraan event.</li><li>Ketentuan pengunjung nomor 8 wajib dipatuhi selama acara berlangsung demi keamanan, kenyamanan, dan kelancaran penyelenggaraan event.</li><li>Ketentuan pengunjung nomor 9 wajib dipatuhi selama acara berlangsung demi keamanan, kenyamanan, dan kelancaran penyelenggaraan event.</li><li>Ketentuan pengunjung nomor 10 wajib dipatuhi selama acara berlangsung demi keamanan, kenyamanan, dan kelancaran penyelenggaraan event.</li><li>Ketentuan pengunjung nomor 11 wajib dipatuhi selama acara berlangsung demi keamanan, kenyamanan, dan kelancaran penyelenggaraan event.</li><li>Ketentuan pengunjung nomor 12 wajib dipatuhi selama acara berlangsung demi keamanan, kenyamanan, dan kelancaran penyelenggaraan event.</li><li>Ketentuan pengunjung nomor 13 wajib dipatuhi selama acara berlangsung demi keamanan, kenyamanan, dan kelancaran penyelenggaraan event.</li><li>Ketentuan pengunjung nomor 14 wajib dipatuhi selama acara berlangsung demi keamanan, kenyamanan, dan kelancaran penyelenggaraan event.</li><li>Ketentuan pengunjung nomor 15 wajib dipatuhi selama acara berlangsung demi keamanan, kenyamanan, dan kelancaran penyelenggaraan event.</li><li>Ketentuan pengunjung nomor 16 wajib dipatuhi selama acara berlangsung demi keamanan, kenyamanan, dan kelancaran penyelenggaraan event.</li><li>Ketentuan pengunjung nomor 17 wajib dipatuhi selama acara berlangsung demi keamanan, kenyamanan, dan kelancaran penyelenggaraan event.</li><li>Ketentuan pengunjung nomor 18 wajib dipatuhi selama acara berlangsung demi keamanan, kenyamanan, dan kelancaran penyelenggaraan event.</li><li>Ketentuan pengunjung nomor 19 wajib dipatuhi selama acara berlangsung demi keamanan, kenyamanan, dan kelancaran penyelenggaraan event.</li><li>Ketentuan pengunjung nomor 20 wajib dipatuhi selama acara berlangsung demi keamanan, kenyamanan, dan kelancaran penyelenggaraan event.</li></ol></div>
 
-<div class="ticket-box">
-<div class="ticket-top">
-<div>Harga mulai dari</div>
-<div class="price">Rp50.000</div>
-</div>
-<a href="tiket.html" class="buy-btn"><i class="fa-solid fa-ticket"></i> Beli Tiket</a>
 </div>
 
 <footer>
@@ -239,7 +295,6 @@ border-bottom:3px solid #4562d8;
 © 2026 ETATIX.ID - All Rights Reserved
 </div>
 </footer>
-
 </div>
 
 <div class="mobile-buy"><a href="tiket.html"><i class="fa-solid fa-ticket"></i> Beli Tiket Sekarang</a></div>
