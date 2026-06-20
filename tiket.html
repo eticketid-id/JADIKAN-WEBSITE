@@ -95,6 +95,8 @@ body{background:linear-gradient(180deg,#edf3ff,#f8fbff);padding-bottom:130px}
 <script>
 const tickets=document.querySelectorAll('.ticket');
 let discount=0;
+localStorage.removeItem('jumlahTiket');
+localStorage.removeItem('totalPembayaran');
 
 function rp(n){return 'Rp '+n.toLocaleString('id-ID')}
 
