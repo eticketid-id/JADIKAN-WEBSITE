@@ -1,0 +1,292 @@
+```html
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pembelian Berhasil</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+    background:linear-gradient(-45deg,#020617,#0f172a,#1e3a8a,#312e81);
+    background-size:400% 400%;
+    animation:bgMove 12s ease infinite;
+}
+
+@keyframes bgMove{
+    0%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+    100%{background-position:0% 50%;}
+}
+
+.bg-particles{
+    position:absolute;
+    width:100%;
+    height:100%;
+    overflow:hidden;
+}
+
+.bg-particles span{
+    position:absolute;
+    width:8px;
+    height:8px;
+    background:white;
+    border-radius:50%;
+    opacity:.3;
+    animation:floatUp linear infinite;
+}
+
+@keyframes floatUp{
+    from{
+        transform:translateY(110vh) scale(0);
+    }
+    to{
+        transform:translateY(-20vh) scale(1);
+    }
+}
+
+.success-card{
+    width:95%;
+    max-width:650px;
+    position:relative;
+    z-index:2;
+    text-align:center;
+    padding:40px;
+    border-radius:30px;
+    background:rgba(255,255,255,.08);
+    backdrop-filter:blur(20px);
+    border:1px solid rgba(255,255,255,.15);
+    box-shadow:0 20px 80px rgba(0,0,0,.4);
+    color:#fff;
+    animation:cardShow 1s ease;
+}
+
+@keyframes cardShow{
+    from{
+        opacity:0;
+        transform:translateY(50px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+.checkmark{
+    width:130px;
+    height:130px;
+    margin:auto;
+    border-radius:50%;
+    background:linear-gradient(135deg,#00ff88,#00d26a);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:70px;
+    color:white;
+    box-shadow:0 0 40px #00ff88;
+    animation:pulse 2s infinite;
+}
+
+@keyframes pulse{
+    0%,100%{
+        transform:scale(1);
+    }
+    50%{
+        transform:scale(1.08);
+    }
+}
+
+h1{
+    margin-top:25px;
+    font-size:36px;
+    font-weight:800;
+    color:#00ff88;
+    text-shadow:0 0 20px rgba(0,255,136,.5);
+}
+
+.desc{
+    margin-top:15px;
+    line-height:1.8;
+    color:#dbeafe;
+    font-size:15px;
+}
+
+.ticket-box{
+    margin-top:30px;
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:20px;
+    padding:25px;
+}
+
+.item{
+    display:flex;
+    justify-content:space-between;
+    padding:14px 0;
+    border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.item:last-child{
+    border:none;
+}
+
+.label{
+    color:#94a3b8;
+    font-weight:500;
+}
+
+.value{
+    font-weight:700;
+    color:white;
+}
+
+.email-info{
+    margin-top:25px;
+    padding:18px;
+    border-radius:15px;
+    background:rgba(0,255,136,.12);
+    border:1px solid rgba(0,255,136,.25);
+    color:#dcfce7;
+    line-height:1.8;
+}
+
+.btn{
+    display:inline-block;
+    margin-top:25px;
+    text-decoration:none;
+    padding:15px 35px;
+    border-radius:50px;
+    color:white;
+    font-weight:700;
+    background:linear-gradient(135deg,#00ff88,#00b4ff);
+    box-shadow:0 10px 30px rgba(0,255,136,.3);
+    transition:.3s;
+}
+
+.btn:hover{
+    transform:translateY(-3px);
+}
+
+.confetti{
+    position:absolute;
+    width:12px;
+    height:12px;
+    top:-20px;
+    animation:confettiFall linear forwards;
+}
+
+@keyframes confettiFall{
+    to{
+        transform:translateY(120vh) rotate(720deg);
+        opacity:0;
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="bg-particles" id="particles"></div>
+<div id="confettiContainer"></div>
+
+<div class="success-card">
+
+    <div class="checkmark">✓</div>
+
+    <h1>PEMBELIAN BERHASIL</h1>
+
+    <p class="desc">
+        Terima kasih atas pembelian Anda.<br>
+        Transaksi telah berhasil diproses dan dikonfirmasi.
+    </p>
+
+    <div class="ticket-box">
+
+        <div class="item">
+            <span class="label">Nama</span>
+            <span class="value">{NAMA}</span>
+        </div>
+
+        <div class="item">
+            <span class="label">Jenis Tiket</span>
+            <span class="value">{JENIS TIKET}</span>
+        </div>
+
+        <div class="item">
+            <span class="label">Total Pembayaran</span>
+            <span class="value">{TOTAL PEMBAYARAN}</span>
+        </div>
+
+    </div>
+
+    <div class="email-info">
+        📩 Silakan cek kotak masuk atau folder <b>Spam</b>
+        pada akun Gmail yang didaftarkan.<br><br>
+
+        🎟️ E-Ticket Anda telah berhasil dikirim dan siap digunakan.
+    </div>
+
+    <a href="#" class="btn">Lihat E-Ticket</a>
+
+</div>
+
+<script>
+
+// Background particles
+const particles = document.getElementById('particles');
+
+for(let i=0;i<60;i++){
+    const p=document.createElement('span');
+
+    p.style.left=Math.random()*100+'%';
+    p.style.animationDuration=(10+Math.random()*20)+'s';
+    p.style.opacity=Math.random();
+
+    particles.appendChild(p);
+}
+
+// Confetti effect
+function createConfetti(){
+
+    const container=document.getElementById('confettiContainer');
+
+    for(let i=0;i<150;i++){
+
+        let conf=document.createElement('div');
+
+        conf.classList.add('confetti');
+
+        conf.style.left=Math.random()*100+'vw';
+
+        conf.style.background=
+        `hsl(${Math.random()*360},100%,50%)`;
+
+        conf.style.animationDuration=
+        (3+Math.random()*4)+'s';
+
+        conf.style.opacity=Math.random();
+
+        container.appendChild(conf);
+    }
+}
+
+createConfetti();
+
+</script>
+
+</body>
+</html>
+```
