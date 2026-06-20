@@ -82,8 +82,8 @@ input,select,textarea{width:100%;padding:16px;margin-top:8px;border-radius:16px;
 <div id="loading">Sedang memproses...</div>
 
 <script>
-const total = localStorage.getItem('totalPembayaran') || 0;
-const jumlahTiket = localStorage.getItem('jumlahTiket') || 0;
+const total = localStorage.getItem('totalHarga') || 0;
+const jumlahTiket = localStorage.getItem('jumlahItem') || 0;
 const jenisTiket = localStorage.getItem('jenisTiket') || '-';
 
 document.getElementById('totalBayar').innerText =
@@ -127,9 +127,9 @@ emailjs.send(
         email: email.value,
         whatsapp: wa.value,
         alamat: alamat.value,
-        jenis_tiket: jenisTiket,
-        jumlah_tiket: jumlahTiket,
-        total_bayar: total
+        jenis_tiket: localStorage.getItem('jenisTiket'),
+        jumlah_tiket: localStorage.getItem('jumlahItem'),
+        total_bayar: localStorage.getItem('totalHarga')
     }
 )
 .then(function(response){
